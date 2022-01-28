@@ -1,0 +1,2 @@
+secrets/**.nix text filter=age-crypt
+secrets.nix text filter=age-crypt
