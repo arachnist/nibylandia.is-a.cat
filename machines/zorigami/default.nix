@@ -5,6 +5,9 @@
 let my = import ../..;
 in {
   imports = [ ./hardware.nix my.modules ];
+
+  age.secrets.cassAuth.file = ../../secrets/cassAuth.age;
+
   my.monitoring-server = {
 	enable = true;
 	domain = "monitoring.is-a.cat";
@@ -17,5 +20,12 @@ in {
     channels = config.my.secrets.userDB.notbot.irc.channels;
     jitsiChannels = config.my.secrets.userDB.notbot.irc.jitsiChannels;
     atChannel = config.my.secrets.userDB.notbot.irc.atChannel;
+  };
+  my.cass = {
+    enable = true;
+    fileStore = "/srv/www/arachnist.is-a.cat/c";
+    urlBase = "https://ar.is-a.cat/c/";
+    domain = "ar.is-a.cat";
+    authFileLocation = config.age.secrets.cassAuth.path;
   };
 }
