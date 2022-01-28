@@ -24,6 +24,12 @@
       defaultEditor = true;
     };
 
+    programs.tmux = {
+      enable = true;
+      terminal = "screen256-color";
+      clock24 = true;
+    };
+
     programs.mtr.enable = true;
 
     nix.extraOptions = ''
@@ -57,7 +63,6 @@
       dstat
       htop
       iperf
-      tmux
       whois
       xxd
       tcpdump

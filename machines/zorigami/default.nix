@@ -5,5 +5,10 @@
 let my = import ../..;
 in {
   imports = [ ./hardware.nix my.modules ];
-  environment.systemPackages = with pkgs; [ notbot cass python3Packages.minecraft-overviewer ];
+  my.monitoring-server = {
+	enable = true;
+	domain = "monitoring.is-a.cat";
+  };
+  my.nginx.enable = true;
+  my.postgresql.enable = true;
 }
