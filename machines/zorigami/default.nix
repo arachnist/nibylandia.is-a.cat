@@ -1,6 +1,6 @@
 # Still very WIP; needs roles/modules for the stuff that's actually running there
 
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let my = import ../..;
 in {
@@ -11,4 +11,11 @@ in {
   };
   my.nginx.enable = true;
   my.postgresql.enable = true;
+  my.notbot = {
+    enable = true;
+    nickServPassword = config.my.secrets.userDB.notbot.irc.password;
+    channels = config.my.secrets.userDB.notbot.irc.channels;
+    jitsiChannels = config.my.secrets.userDB.notbot.irc.jitsiChannels;
+    atChannel = config.my.secrets.userDB.notbot.irc.atChannel;
+  };
 }

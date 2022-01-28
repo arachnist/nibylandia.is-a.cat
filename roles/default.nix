@@ -1,1 +1,1 @@
-{ imports = [ ./monitoring.nix ./nginx.nix ./postgresql.nix ]; }
+{ imports = [ ./monitoring.nix ./nginx.nix ./postgresql.nix ./notbot.nix ]; }
