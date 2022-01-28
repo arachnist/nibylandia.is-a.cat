@@ -9,8 +9,8 @@ in {
   age.secrets.cassAuth.file = ../../secrets/cassAuth.age;
 
   my.monitoring-server = {
-	enable = true;
-	domain = "monitoring.is-a.cat";
+    enable = true;
+    domain = "monitoring.is-a.cat";
   };
   my.nginx.enable = true;
   my.postgresql.enable = true;

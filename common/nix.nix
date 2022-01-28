@@ -1,9 +1,7 @@
 { ... }:
 
-let
-	my = import ./..;
-in
-{
+let my = import ./..;
+in {
   nixpkgs.overlays = [ my.pkgs ];
   documentation = {
     doc.enable = false;

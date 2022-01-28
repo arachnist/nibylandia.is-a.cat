@@ -3,9 +3,10 @@
 let
   cfg = config.my.notbot;
   listOpts = f: l:
-    if lib.lists.length l > 0
-      then "${f} " + builtins.concatStringsSep " ${f} " (map (x: ''"${x}"'') l)
-      else "";
+    if lib.lists.length l > 0 then
+      "${f} " + builtins.concatStringsSep " ${f} " (map (x: ''"${x}"'') l)
+    else
+      "";
 in {
   options.my.notbot = {
     enable = lib.mkEnableOption "Enable the notbot irc bot";
@@ -36,7 +37,7 @@ in {
     atChannel = lib.mkOption {
       type = lib.types.str;
       description = "Channel to post checkinator notifications on";
-	};
+    };
     channels = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       description = "List of irc channels to join";
@@ -56,11 +57,11 @@ in {
         Type = "simple";
         User = cfg.user;
         ExecStart = ''
-          ${pkgs.notbot}/bin/notbot -nickname "${cfg.nickname}" -name "${cfg.name}" -user "${cfg.user}" \
-			-server "${cfg.server}" -password "${cfg.nickServPassword}" -at.channel "${cfg.atChannel}" \
-			${listOpts "-channels" cfg.channels} \
-			${listOpts "-jitsi.channels" cfg.jitsiChannels}
-		'';
+                    ${pkgs.notbot}/bin/notbot -nickname "${cfg.nickname}" -name "${cfg.name}" -user "${cfg.user}" \
+          			-server "${cfg.server}" -password "${cfg.nickServPassword}" -at.channel "${cfg.atChannel}" \
+          			${listOpts "-channels" cfg.channels} \
+          			${listOpts "-jitsi.channels" cfg.jitsiChannels}
+          		'';
       };
     };
     users.users."${cfg.user}" = {

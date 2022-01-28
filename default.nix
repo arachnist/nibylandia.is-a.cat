@@ -4,7 +4,5 @@ rec {
   secrets = import ./secrets;
   pkgs = import ./pkgs;
 
-  modules = {
-    imports = [ common roles secrets ];
-  };
+  modules = { imports = [ common roles secrets ]; };
 }
