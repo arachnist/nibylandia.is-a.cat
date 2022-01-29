@@ -7,5 +7,6 @@
     ./cass.nix
     ./minecraft.nix
     ./irc.nix
+    ./nextcloud.nix
   ];
 }

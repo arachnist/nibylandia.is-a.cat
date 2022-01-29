@@ -53,6 +53,12 @@ in {
     enable = true;
     domain = "irc.is-a.cat";
   };
+  my.nextcloud = {
+    enable = true;
+    domain = "cloud.is-a.cat";
+    adminSecret = config.age.secrets.nextCloudAdmin.path;
+    exporterSecret = config.age.secrets.nextCloudExporter.path;
+  };
 
   # need to figure out something fancy about network configuration
   networking.useDHCP = false;
