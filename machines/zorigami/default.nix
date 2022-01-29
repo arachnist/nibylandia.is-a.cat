@@ -8,8 +8,16 @@ in {
 
   age.secrets.cassAuth.file = ../../secrets/cassAuth.age;
   age.secrets.minecraftRestic.file = ../../secrets/norkclubMinecraftRestic.age;
-  age.secrets.nextCloudAdmin.file = ../../secrets/nextCloudAdmin.age;
-  age.secrets.nextCloudExporter.file = ../../secrets/nextCloudExporter.age;
+  age.secrets.nextCloudAdmin = {
+    file = ../../secrets/nextCloudAdmin.age;
+    group = "nextcloud";
+    mode = "440";
+  };
+  age.secrets.nextCloudExporter = {
+    file = ../../secrets/nextCloudExporter.age;
+    group = "nextcloud-exporter";
+    mode = "440";
+  };
   age.secrets.wgNibylandia.file = ../../secrets/wg/nibylandia_zorigami.age;
 
   my.monitoring-server = {
