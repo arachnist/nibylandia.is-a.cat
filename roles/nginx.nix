@@ -19,5 +19,8 @@
 
     security.acme.acceptTerms = true;
     security.acme.defaults.email = config.my.secrets.userDB.ar.email;
+
+    networking.firewall.allowedTCPPorts = [ 80 443 ];
+    networking.firewall.allowedUDPPorts = [ 80 443 ];
   };
 }
