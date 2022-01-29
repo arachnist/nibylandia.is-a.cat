@@ -8,6 +8,9 @@ in {
 
   age.secrets.cassAuth.file = ../../secrets/cassAuth.age;
   age.secrets.minecraftRestic.file = ../../secrets/norkclubMinecraftRestic.age;
+  age.secrets.nextCloudAdmin.file = ../../secrets/nextCloudAdmin.age;
+  age.secrets.nextCloudExporter.file = ../../secrets/nextCloudExporter.age;
+  age.secrets.wgNibylandia.file = ../../secrets/wg/nibylandia_zorigami.age;
 
   my.monitoring-server = {
     enable = true;
@@ -45,5 +48,73 @@ in {
     overviewerParallelism = 8;
     tcpPorts = [ 25565 25566 ];
     udpPorts = [ 19132 19133 25565 25566 ];
+  };
+
+  # need to figure out something fancy about network configuration
+  networking.useDHCP = false;
+  networking.interfaces.enp36s0f1.useDHCP = false;
+  networking.interfaces.enp38s0.useDHCP = false;
+  networking.interfaces.enp39s0.useDHCP = false;
+  networking.interfaces.enp42s0f3u5u3c2.useDHCP = false;
+  networking.tempAddresses = "disabled";
+  networking.interfaces.enp36s0f0 = {
+    useDHCP = false;
+    ipv4 = {
+      addresses = [{
+        address = "185.236.240.137";
+        prefixLength = 31;
+      }];
+      routes = [{
+        address = "0.0.0.0";
+        prefixLength = 0;
+        via = "185.236.240.136";
+      }];
+    };
+    ipv6 = {
+      addresses = [{
+        address = "2a0d:eb00:8007::10";
+        prefixLength = 64;
+      }];
+      routes = [{
+        address = "::";
+        prefixLength = 0;
+        via = "2a0d:eb00:8007::1";
+      }];
+    };
+  };
+  networking.nameservers = [
+    "8.8.8.8"
+    "8.8.4.4"
+    "1.1.1.1"
+    "2606:4700:4700::1111"
+    "2606:4700:4700::1001"
+    "2001:4860:4860::8888"
+  ];
+  networking.wireguard.interfaces = {
+    wg-nibylandia = {
+      ips = [ "10.255.255.1/24" ];
+      privateKeyFile = config.age.secrets.wgNibylandia.path;
+      listenPort = 51315;
+
+      peers = [
+        {
+          publicKey = "g/XhdVYsegn7Pp58Y1HFNxp4jhmA8YjRDg8W8J6swCw=";
+          endpoint = "i.am-a.cat:51315";
+          allowedIPs =
+            [ "10.255.255.2/32" "192.168.20.0/24" "192.168.24.0/24" ];
+          persistentKeepalive = 15;
+        }
+        {
+          publicKey = "ubxtr3zW9F/ofjaQFnj6XpYcrOvTdOSW5wv06+VEehU=";
+          allowedIPs = [ "10.255.255.3/32" ];
+          persistentKeepalive = 15;
+        }
+        {
+          publicKey = "tVH3q1AJZKsitYmASdaogMCBwhMCd8oSuDY2POpiUiY=";
+          allowedIPs = [ "10.255.255.4/32" ];
+          persistentKeepalive = 15;
+        }
+      ];
+    };
   };
 }
