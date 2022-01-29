@@ -49,6 +49,10 @@ in {
     tcpPorts = [ 25565 25566 ];
     udpPorts = [ 19132 19133 25565 25566 ];
   };
+  my.irc = {
+    enable = true;
+    domain = "irc.is-a.cat";
+  };
 
   # need to figure out something fancy about network configuration
   networking.useDHCP = false;
@@ -116,5 +120,10 @@ in {
         }
       ];
     };
+  };
+  boot.kernel.sysctl = {
+    "net.ipv6.conf.all.accept_ra" = false;
+    "net.ipv6.conf.default.accept_ra" = false;
+    "net.ipv4.conf.all.forwarding" = true;
   };
 }
