@@ -100,6 +100,11 @@ in {
     "2606:4700:4700::1001"
     "2001:4860:4860::8888"
   ];
+  boot.kernel.sysctl = {
+    "net.ipv6.conf.all.accept_ra" = false;
+    "net.ipv6.conf.default.accept_ra" = false;
+    "net.ipv4.conf.all.forwarding" = true;
+  };
   networking.wireguard.interfaces = {
     wg-nibylandia = {
       ips = [ "10.255.255.1/24" ];
@@ -127,11 +132,7 @@ in {
       ];
     };
   };
-  boot.kernel.sysctl = {
-    "net.ipv6.conf.all.accept_ra" = false;
-    "net.ipv6.conf.default.accept_ra" = false;
-    "net.ipv4.conf.all.forwarding" = true;
-  };
+  networking.firewall.allowedUDPPorts = [ 51315 ];
 
   # Need to figure out something fancy here too
   services.nginx.virtualHosts = {
