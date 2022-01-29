@@ -132,4 +132,23 @@ in {
     "net.ipv6.conf.default.accept_ra" = false;
     "net.ipv4.conf.all.forwarding" = true;
   };
+
+  # Need to figure out something fancy here too
+  services.nginx.virtualHosts = {
+    "s.nork.club" = {
+      forceSSL = true;
+      enableACME = true;
+      root = "/srv/www/s.nork.club";
+    };
+    "arachnist.is-a.cat" = {
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = { root = "/srv/www/arachnist.is-a.cat"; };
+    };
+    "brata.zajeba.li" = {
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = { root = "/srv/www/brata.zajeba.li"; };
+    };
+  };
 }
