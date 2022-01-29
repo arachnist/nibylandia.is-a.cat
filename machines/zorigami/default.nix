@@ -6,7 +6,11 @@ let my = import ../..;
 in {
   imports = [ ./hardware.nix my.modules ];
 
-  age.secrets.cassAuth.file = ../../secrets/cassAuth.age;
+  age.secrets.cassAuth = {
+    file = ../../secrets/cassAuth.age;
+    group = "nginx";
+    mode = "440";
+  };
   age.secrets.minecraftRestic.file = ../../secrets/norkclubMinecraftRestic.age;
   age.secrets.nextCloudAdmin = {
     file = ../../secrets/nextCloudAdmin.age;
@@ -148,6 +152,11 @@ in {
       forceSSL = true;
       enableACME = true;
       root = "/srv/www/s.nork.club";
+    };
+    "ar.is-a.cat" = {
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = { root = "/srv/www/arachnist.is-a.cat"; };
     };
     "arachnist.is-a.cat" = {
       forceSSL = true;
