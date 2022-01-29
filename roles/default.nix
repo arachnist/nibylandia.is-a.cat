@@ -8,5 +8,6 @@
     ./minecraft.nix
     ./irc.nix
     ./nextcloud.nix
+    ./mailserver.nix
   ];
 }

@@ -2,7 +2,9 @@
 
 { config, pkgs, ... }:
 
-let my = import ../..;
+let
+  my = import ../..;
+  userdb = config.my.secrets.userDB;
 in {
   imports = [ ./hardware.nix my.modules ];
 
@@ -23,6 +25,7 @@ in {
     mode = "440";
   };
   age.secrets.wgNibylandia.file = ../../secrets/wg/nibylandia_zorigami.age;
+  age.secrets.arMail.file = ../../secrets/mail/ar.age;
 
   my.monitoring-server = {
     enable = true;
@@ -32,10 +35,10 @@ in {
   my.postgresql.enable = true;
   my.notbot = {
     enable = true;
-    nickServPassword = config.my.secrets.userDB.notbot.irc.password;
-    channels = config.my.secrets.userDB.notbot.irc.channels;
-    jitsiChannels = config.my.secrets.userDB.notbot.irc.jitsiChannels;
-    atChannel = config.my.secrets.userDB.notbot.irc.atChannel;
+    nickServPassword = userdb.notbot.irc.password;
+    channels = userdb.notbot.irc.channels;
+    jitsiChannels = userdb.notbot.irc.jitsiChannels;
+    atChannel = userdb.notbot.irc.atChannel;
   };
   my.cass = {
     enable = true;
@@ -46,7 +49,7 @@ in {
   };
   my.minecraft-server = {
     enable = true;
-    sshKeys = config.my.secrets.userDB.ar.keys ++ [
+    sshKeys = userdb.ar.keys ++ [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDOHWPbzvwXTftY1r0dXcYZxT9QBnQkwepdMn8PCAPlYvYwUObEj3rgYrYRFrtCRWZVrKAdqBxnH9/6S9w631Zs7tgqEeDHJsotZNZV3qip7qGjn9IqUHXqF95MUDJV21AeBAqQ1xalefwCkwf/vYLFn8dSnsnlfO+mtlHZOuBED+SB2U1eNrWY2e45v8m7PqSyTCbCu0F3wVcHGwRFsxWA598wf85UBRVcSWVcUydE9F+PCS9sGETkXiRUDcHWnup8uygs4xLa9RADubhdGkUbQE6m6yOjvHJWZ4ov59zJh+hmpszCwfmUw/k39T2TM7tbwUWxgc68qDyaMGQr/Wzd x10a94@Celestia"
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDeJ+LSo3YXE6Jk6pGKL5om/VOi7XE5OvHA2U73V0pJXHa1bA4ityICeNqec2w8TSWSwTihJ4oAM7YLShkERNTcd1NWNHgUYova9nJ/nItFxrxDpTQsqK315u4d7nE+go09c85cyomHbDDcNVg9kJeCUjF+dr82N7JZfYVdQystOslOROYtl94GHuFHVOQyBRGeSztmakYvK1+3WV8dby6TfYG1l6uf6qLCg7q64zR4xDDP0KgfcrsusBQ6qYnKhop1fUTaW9NtEOQP/MhFLDp2YQmTsNJDiKAQpwwYLexWq4UcziXbnRfD56CHFHbW7Hu6Ltu35cHFKR2r9y4TBwTV crendgrim@gmx.de"
     ];
@@ -70,6 +73,15 @@ in {
     domain = "cloud.is-a.cat";
     adminSecret = config.age.secrets.nextCloudAdmin.path;
     exporterSecret = config.age.secrets.nextCloudExporter.path;
+  };
+  my.mailserver = {
+    enable = false;
+    fqdn = "zorigami.is-a.cat";
+    domains = [ "is-a.cat" ];
+    users."${userdb.ar.email}" = {
+      aliases = userdb.ar.emailAliases;
+      hashedPasswordFile = config.age.secrets.arMail.path;
+    };
   };
 
   # need to figure out something fancy about network configuration

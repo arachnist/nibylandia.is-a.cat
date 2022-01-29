@@ -107,5 +107,7 @@ in {
       enable = true;
       package = cfg.javaPackage;
     };
+
+    environment.systemPackages = with pkgs; [ restic ];
   };
 }
