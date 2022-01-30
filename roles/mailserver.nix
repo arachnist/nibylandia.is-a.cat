@@ -32,6 +32,15 @@ in {
       domains = cfg.domains;
       certificateScheme = 3;
       loginAccounts = cfg.users;
+      enableManageSieve = true;
+      fullTextSearch = {
+        enable = true;
+        memoryLimit = 2000;
+	  };
+      localDnsResolver = false;
+      monitoring.enable = false;
+      borgbackup.enable = false;
+      backup.enable = false;
     };
   };
 }

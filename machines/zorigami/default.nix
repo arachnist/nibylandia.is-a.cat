@@ -75,7 +75,7 @@ in {
     exporterSecret = config.age.secrets.nextCloudExporter.path;
   };
   my.mailserver = {
-    enable = false;
+    enable = true;
     fqdn = "zorigami.is-a.cat";
     domains = [ "is-a.cat" ];
     users."${userdb.ar.email}" = {

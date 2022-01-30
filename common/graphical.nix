@@ -157,6 +157,7 @@
       gphoto2
       minicom
       maim
+      thunderbird
     ];
 
     nixpkgs.config.joypixels.acceptLicense = true;
