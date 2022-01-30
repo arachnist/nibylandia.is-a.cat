@@ -9,5 +9,6 @@
     ./irc.nix
     ./nextcloud.nix
     ./mailserver.nix
+    ./gaming-client.nix
   ];
 }
