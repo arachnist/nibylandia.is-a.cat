@@ -9,5 +9,6 @@
     ./remote-access.nix
     ./locale.nix
     ./nix.nix
+    ./thunderbolt.nix
   ];
 }

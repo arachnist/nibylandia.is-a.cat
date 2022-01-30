@@ -6,6 +6,7 @@
   my.graphical.enable = true;
   my.boot.ryzen.enable = true;
   my.boot.uefi.enable = true;
+  my.thunderbolt.enable = true;
 
   boot.initrd.availableKernelModules =
     [ "nvme" "xhci_pci" "ahci" "usbhid" "uas" "sd_mod" ];
