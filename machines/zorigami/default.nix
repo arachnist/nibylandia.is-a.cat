@@ -31,8 +31,11 @@ in {
     enable = true;
     domain = "monitoring.is-a.cat";
   };
+
   my.nginx.enable = true;
+
   my.postgresql.enable = true;
+
   my.notbot = {
     enable = true;
     nickServPassword = userdb.notbot.irc.password;
@@ -40,6 +43,7 @@ in {
     jitsiChannels = userdb.notbot.irc.jitsiChannels;
     atChannel = userdb.notbot.irc.atChannel;
   };
+
   my.cass = {
     enable = true;
     fileStore = "/srv/www/arachnist.is-a.cat/c";
@@ -47,6 +51,7 @@ in {
     domain = "ar.is-a.cat";
     authFileLocation = config.age.secrets.cassAuth.path;
   };
+
   my.minecraft-server = {
     enable = true;
     sshKeys = userdb.ar.keys ++ [
@@ -64,20 +69,23 @@ in {
     tcpPorts = [ 25565 25566 ];
     udpPorts = [ 19132 19133 25565 25566 ];
   };
+
   my.irc = {
     enable = true;
     domain = "irc.is-a.cat";
   };
+
   my.nextcloud = {
     enable = true;
     domain = "cloud.is-a.cat";
     adminSecret = config.age.secrets.nextCloudAdmin.path;
     exporterSecret = config.age.secrets.nextCloudExporter.path;
   };
+
   my.mailserver = {
     enable = true;
-    fqdn = "zorigami.is-a.cat";
-    domains = [ "is-a.cat" ];
+    fqdn = "is-a.cat";
+    domains = [ "is-a.cat" "i.am-a.cat" "rsg.enterprises" ];
     users."${userdb.ar.email}" = {
       aliases = userdb.ar.emailAliases;
       hashedPasswordFile = config.age.secrets.arMail.path;
