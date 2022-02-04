@@ -36,11 +36,19 @@ in {
       fullTextSearch = {
         enable = true;
         memoryLimit = 2000;
-	  };
+      };
       localDnsResolver = false;
       monitoring.enable = false;
       borgbackup.enable = false;
       backup.enable = false;
     };
+
+    services.rspamd.extraConfig = ''
+      actions {
+        reject = null; # Disable rejects, default is 15
+        add_header = 6; # Add header when reaching this score
+        greylist = null; # Apply greylisting when reaching this score
+      }
+    '';
   };
 }
