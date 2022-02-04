@@ -25,7 +25,9 @@ in {
     mode = "440";
   };
   age.secrets.wgNibylandia.file = ../../secrets/wg/nibylandia_zorigami.age;
+  
   age.secrets.arMail.file = ../../secrets/mail/ar.age;
+  age.secrets.apoMail.file = ../../secrets/mail/apo.age;
 
   my.monitoring-server = {
     enable = true;
@@ -89,6 +91,9 @@ in {
     users."${userdb.ar.email}" = {
       aliases = userdb.ar.emailAliases;
       hashedPasswordFile = config.age.secrets.arMail.path;
+    };
+    users."${userdb.apo.email}" = {
+      hashedPasswordFile = config.age.secrets.apoMail.path;
     };
   };
 
