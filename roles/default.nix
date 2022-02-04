@@ -10,5 +10,6 @@
     ./nextcloud.nix
     ./mailserver.nix
     ./gaming-client.nix
+    ./matrix-server.nix
   ];
 }

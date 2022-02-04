@@ -97,6 +97,11 @@ in {
     };
   };
 
+  my.matrix-server = {
+	enable = true;
+	serverName = "is-a.cat";
+  };
+
   # need to figure out something fancy about network configuration
   networking.useDHCP = false;
   networking.interfaces.enp36s0f1.useDHCP = false;
