@@ -90,6 +90,7 @@
         noto-fonts-emoji-blob-bin
         joypixels
         twemoji-color-font
+        carlito
       ];
     };
 
