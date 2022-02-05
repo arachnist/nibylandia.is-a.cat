@@ -169,7 +169,7 @@
 
     users.users.ar = {
       hashedPassword = lib.mkForce
-        config.my.secrets.userDB.ar.passwords."${config.networking.hostName}";
+        config.my.secrets.userDB.ar.passwords.${config.networking.hostName};
     };
 
     my.interactive.enable = lib.mkDefault true;

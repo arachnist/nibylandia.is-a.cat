@@ -88,11 +88,11 @@ in {
     enable = true;
     fqdn = "is-a.cat";
     domains = [ "is-a.cat" "i.am-a.cat" "rsg.enterprises" ];
-    users."${userdb.ar.email}" = {
+    users.${userdb.ar.email} = {
       aliases = userdb.ar.emailAliases;
       hashedPasswordFile = config.age.secrets.arMail.path;
     };
-    users."${userdb.apo.email}" = {
+    users.${userdb.apo.email} = {
       hashedPasswordFile = config.age.secrets.apoMail.path;
     };
   };

@@ -64,10 +64,10 @@ in {
           		'';
       };
     };
-    users.users."${cfg.user}" = {
+    users.users.${cfg.user} = {
       isSystemUser = true;
       group = cfg.user;
     };
-    users.groups."${cfg.user}" = { };
+    users.groups.${cfg.user} = { };
   };
 }

@@ -87,7 +87,7 @@ in {
       }];
     })
     (lib.mkIf config.services.nginx.enable {
-      services.nginx.virtualHosts."${cfg.domain}" = {
+      services.nginx.virtualHosts.${cfg.domain} = {
         forceSSL = true;
         enableACME = true;
         locations."/" = {

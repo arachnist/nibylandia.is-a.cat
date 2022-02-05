@@ -12,7 +12,7 @@
   config = lib.mkIf config.my.irc.enable {
     environment.systemPackages = with pkgs; [ weechat ];
 
-    services.nginx.virtualHosts."${config.my.irc.domain}" = {
+    services.nginx.virtualHosts.${config.my.irc.domain} = {
       forceSSL = true;
       enableACME = true;
       locations."^~ /weechat" = {

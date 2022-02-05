@@ -41,7 +41,7 @@ in {
       };
     };
 
-    services.nginx.virtualHosts."${cfg.domain}".locations = {
+    services.nginx.virtualHosts.${cfg.domain}.locations = {
       "/up" = {
         proxyPass = "http://${cfg.listen}";
         basicAuthFile = cfg.authFileLocation;

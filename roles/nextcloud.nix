@@ -56,7 +56,7 @@ in {
       };
     };
 
-    services.nginx.virtualHosts."${cfg.domain}" = {
+    services.nginx.virtualHosts.${cfg.domain} = {
       forceSSL = true;
       enableACME = true;
     };
