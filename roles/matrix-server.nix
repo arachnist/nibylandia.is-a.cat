@@ -25,7 +25,8 @@
       locations."/_matrix" = { proxyPass = "http://[::1]:6167"; };
 
       locations."/.well-known/matrix/server" = {
-        return = ''200 "{\"m.server\":\"${config.my.matrix-server.serverName}:443\",\"m.homeserver\":{\"base_url\":\"https://${config.my.matrix-server.serverName}\"}}"'';
+        return = ''
+          200 "{\"m.server\":\"${config.my.matrix-server.serverName}:443\",\"m.homeserver\":{\"base_url\":\"https://${config.my.matrix-server.serverName}\"}}"'';
       };
     };
   };

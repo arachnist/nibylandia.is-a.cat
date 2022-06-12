@@ -8,7 +8,7 @@ in {
       package = lib.mkOption {
         type = lib.types.package;
         description = "Nextcloud package to use";
-        default = pkgs.nextcloud23;
+        default = pkgs.nextcloud24;
       };
       domain = lib.mkOption {
         type = lib.types.str;

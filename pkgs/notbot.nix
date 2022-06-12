@@ -2,15 +2,15 @@
 
 buildGoModule rec {
   pname = "notbot";
-  version = "0.0.1";
+  version = "0.0.3";
 
   src = fetchFromGitHub {
     owner = "arachnist";
     repo = pname;
-    rev = "df0b22125370085f7cd5069f2323d80e1af24b72";
-    sha256 = "OZixQYDM4r36dFqs+fEbn0Ll/qg1+OrHUTrmeM1zEyo=";
+    rev = "0ee9443824044228dc045095d967d0f71916f67a";
+    sha256 = "jyoFiNAo9tS0bK47CjP2/v7G040Lg7G8Oxxr7gYFyfA=";
   };
 
-  vendorSha256 = "sha256-jqxMTzTY9WpkHzW+AMJ5o9XoS0Rjde5weUPRDVnlBio=";
+  vendorSha256 = "sha256-gi6mrJW65tfWYScwRlPSvBartqfvVlGbR9GWfj9G4xE=";
   proxyVendor = true;
 }

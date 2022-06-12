@@ -34,10 +34,6 @@ in {
       type = lib.types.str;
       description = "NickServ password";
     };
-    atChannel = lib.mkOption {
-      type = lib.types.str;
-      description = "Channel to post checkinator notifications on";
-    };
     channels = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       description = "List of irc channels to join";
@@ -45,6 +41,10 @@ in {
     jitsiChannels = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       description = "List of jitsi channels to monitor";
+    };
+    spaceApiChannels = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      description = "List of spaceApi endpoints to monitor";
     };
   };
 
@@ -58,9 +58,10 @@ in {
         User = cfg.user;
         ExecStart = ''
                     ${pkgs.notbot}/bin/notbot -nickname "${cfg.nickname}" -name "${cfg.name}" -user "${cfg.user}" \
-          			-server "${cfg.server}" -password "${cfg.nickServPassword}" -at.channel "${cfg.atChannel}" \
+          			-server "${cfg.server}" -password "${cfg.nickServPassword}" \
           			${listOpts "-channels" cfg.channels} \
-          			${listOpts "-jitsi.channels" cfg.jitsiChannels}
+          			${listOpts "-jitsi.channels" cfg.jitsiChannels} \
+          			${listOpts "-spaceapi.channels" cfg.spaceApiChannels}
           		'';
       };
     };

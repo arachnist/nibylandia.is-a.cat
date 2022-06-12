@@ -9,4 +9,6 @@ self: super: {
     };
   };
   python3Packages = self.python3.pkgs;
+  patched_sbattach = import <bootspec/installer/patched-sbattach.nix> { };
+  bootspec-secureboot = self.callPackage ./bootspec-secureboot.nix { };
 }

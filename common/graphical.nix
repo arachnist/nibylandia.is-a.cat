@@ -128,6 +128,7 @@
       fuse.userAllowOther = true;
       dconf.enable = true;
       mosh.enable = true;
+      kdeconnect.enable = true;
     };
 
     environment.systemPackages = with pkgs; [
@@ -139,7 +140,6 @@
       imagemagick
       inkscape
       kate
-      kdeconnect
       keybase-gui
       kmail
       kolourpaint

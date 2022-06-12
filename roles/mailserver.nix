@@ -1,8 +1,8 @@
 { config, lib, ... }:
 
 let
-  commit = "6e3a7b2ea6f0d68b82027b988aa25d3423787303";
-  hash = "1i56llz037x416bw698v8j6arvv622qc0vsycd20lx3yx8n77n44";
+  commit = "75728d2686dec5ef2a73cdf80174311587413392";
+  hash = "0n218i9bkjnm0qf3bd0sf2vkqgi3728hnamvvxxrz9nn3386w4jc";
   cfg = config.my.mailserver;
 in {
   imports = [
@@ -46,9 +46,19 @@ in {
     services.rspamd.extraConfig = ''
       actions {
         reject = null; # Disable rejects, default is 15
-        add_header = 6; # Add header when reaching this score
+        add_header = 5; # Add header when reaching this score
         greylist = null; # Apply greylisting when reaching this score
       }
     '';
+    services.rspamd.locals = {
+      "groups.conf".text = ''
+        symbols = {
+          "BAYES_SPAM" { weight = 7; }
+          "BAYES_HAM" { weight = -5; }
+          "R_SPF_ALLOW" { weight = 0; }
+          "R_DKIM_ALLOW" { weight = 0; }
+          "DMARC_POLICY_ALLOW" { weight = 0; }
+        }'';
+    };
   };
 }

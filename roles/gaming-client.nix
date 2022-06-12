@@ -1,11 +1,8 @@
 { config, lib, pkgs, ... }:
 
-let
-  cfg = config.my.gaming-client;
+let cfg = config.my.gaming-client;
 in {
-  options.my.gaming-client = {
-    enable = lib.mkEnableOption "Gaming client";
-  };
+  options.my.gaming-client = { enable = lib.mkEnableOption "Gaming client"; };
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ steam ];

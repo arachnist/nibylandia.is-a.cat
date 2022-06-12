@@ -1,24 +1,27 @@
 { config, lib, pkgs, ... }:
 
-{
+let cfg = config.my.boot;
+in {
   options = {
     my.boot.uefi.enable = lib.mkEnableOption "Boot via UEFI";
     my.boot.ryzen.enable =
       lib.mkEnableOption "Enable AMD Ryzen-specific options";
+    my.boot.secureboot.enable = lib.mkEnableOption "Enable secureboot";
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.my.boot.uefi.enable {
+    (lib.mkIf cfg.uefi.enable {
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;
     })
-    (lib.mkIf config.my.boot.ryzen.enable {
+    (lib.mkIf cfg.ryzen.enable {
       boot = {
         extraModulePackages = with config.boot.kernelPackages; [ zenpower ];
         blacklistedKernelModules = [ "k10temp" ];
         kernelModules = [ "zenpower" "kvm-amd" ];
       };
     })
+    (lib.mkIf cfg.secureboot.enable { })
     { boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest; }
   ];
 }

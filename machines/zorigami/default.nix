@@ -8,6 +8,8 @@ let
 in {
   imports = [ ./hardware.nix my.modules ];
 
+  boot.kernelPackages = pkgs.linuxPackages_testing_bcachefs;
+
   age.secrets.cassAuth = {
     file = ../../secrets/cassAuth.age;
     group = "nginx";
@@ -25,9 +27,15 @@ in {
     mode = "440";
   };
   age.secrets.wgNibylandia.file = ../../secrets/wg/nibylandia_zorigami.age;
-  
+
   age.secrets.arMail.file = ../../secrets/mail/ar.age;
   age.secrets.apoMail.file = ../../secrets/mail/apo.age;
+  age.secrets.mastodonMail.file = ../../secrets/mail/mastodon.age;
+  age.secrets.mastodonPlainMail = {
+    group = "mastodon";
+    mode = "440";
+    file = ../../secrets/mail/mastodonPlain.age;
+  };
 
   my.monitoring-server = {
     enable = true;
@@ -43,7 +51,7 @@ in {
     nickServPassword = userdb.notbot.irc.password;
     channels = userdb.notbot.irc.channels;
     jitsiChannels = userdb.notbot.irc.jitsiChannels;
-    atChannel = userdb.notbot.irc.atChannel;
+    spaceApiChannels = userdb.notbot.irc.spaceApiChannels;
   };
 
   my.cass = {
@@ -95,11 +103,21 @@ in {
     users.${userdb.apo.email} = {
       hashedPasswordFile = config.age.secrets.apoMail.path;
     };
+    users."mastodon@is-a.cat" = {
+      hashedPasswordFile = config.age.secrets.mastodonMail.path;
+    };
   };
 
   my.matrix-server = {
-	enable = true;
-	serverName = "is-a.cat";
+    enable = true;
+    serverName = "is-a.cat";
+  };
+
+  my.mastodon = {
+    enable = true;
+    domain = "is-a.cat";
+    smtpUser = "mastodon@is-a.cat";
+    smtpPasswordFile = config.age.secrets.mastodonPlainMail.path;
   };
 
   # need to figure out something fancy about network configuration

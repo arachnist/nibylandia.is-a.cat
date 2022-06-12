@@ -14,7 +14,7 @@ let
     esac
     	'';
 in pkgs.mkShell {
-  buildInputs = with pkgs; [ git age age-crypt ];
+  buildInputs = with pkgs; [ git age age-crypt sbsigntool efitools openssl ];
   runScript = ''
     git config --local --replace-all 'filter.age-crypt.smudge' 'age-crypt smudge'
     git config --local --replace-all 'filter.age-crypt.clean' 'age-crypt clean'

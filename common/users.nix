@@ -11,7 +11,7 @@
       isNormalUser = true;
       uid = 1000;
       group = "ar";
-      extraGroups = [ "users" "wheel" "systemd-journal" ];
+      extraGroups = [ "users" "wheel" "systemd-journal" "docker" ];
       hashedPassword = lib.mkDefault null;
       openssh.authorizedKeys.keys = config.my.secrets.userDB.ar.keys;
     };
