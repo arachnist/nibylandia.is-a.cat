@@ -3,11 +3,9 @@
 rustPlatform.buildRustPackage rec {
   pname = "bootspec-secureboot";
   version = "unreleased";
-  src = builtins.fetchGit {
-    url = "https://github.com/DeterminateSystems/bootspec-secureboot.git";
-    ref = "main";
-  };
-  cargoSha256 = "sha256-BifoJS4BmVNNGaviycGtQpEF+Oe8dKBNU6j1+MWtods=";
+  src = /home/ar/scm/bootspec-secureboot;
+
+  cargoSha256 = "sha256-PDTuBk0AgdG4tyTNG1TMm6Ba1uazK7U5jDVweCI8lCA=";
 
   postPatch = ''
     substituteInPlace installer/build.rs \

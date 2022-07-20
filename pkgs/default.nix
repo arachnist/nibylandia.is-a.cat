@@ -8,7 +8,11 @@ self: super: {
       minecraft-overviewer = self.callPackage ./minecraft-overviewer.nix { };
     };
   };
+  mpv-unwrapped = super.mpv-unwrapped.override { sixelSupport = true; };
   python3Packages = self.python3.pkgs;
   patched_sbattach = import <bootspec/installer/patched-sbattach.nix> { };
   bootspec-secureboot = self.callPackage ./bootspec-secureboot.nix { };
+  
+  mastodon-src = self.callPackage ./mastodon-src.nix { };
+  mastodon = super.mastodon.override { srcOverride = self.mastodon-src; };
 }

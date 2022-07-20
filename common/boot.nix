@@ -2,6 +2,8 @@
 
 let cfg = config.my.boot;
 in {
+  imports = [ <bootspec/nixos-module.nix> ];
+
   options = {
     my.boot.uefi.enable = lib.mkEnableOption "Boot via UEFI";
     my.boot.ryzen.enable =
@@ -21,7 +23,14 @@ in {
         kernelModules = [ "zenpower" "kvm-amd" ];
       };
     })
-    (lib.mkIf cfg.secureboot.enable { })
+    (lib.mkIf cfg.secureboot.enable {
+      boot.loader.secureboot = {
+        enable = true;
+        signingKeyPath = "/home/ar/secureboot-v2/DB.key";
+        signingCertPath = "/home/ar/secureboot-v2/DB.crt";
+      };
+      my.boot.uefi.enable = lib.mkForce false;
+    })
     { boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest; }
   ];
 }

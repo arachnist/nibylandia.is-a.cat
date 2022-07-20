@@ -12,6 +12,14 @@
       extraModprobeConfig = ''
         options v4l2loopback devices=4 exclusive_caps=1
       '';
+      plymouth = { 
+        enable = false;
+	theme = "breeze";
+	extraConfig = ''
+	  ShowDelay=0
+	'';
+      };
+      initrd.systemd.enable = true;
     };
 
     sound.enable = true;
@@ -68,10 +76,11 @@
       desktopManager.plasma5.enable = true;
       displayManager = {
         sddm = {
-          enable = true;
+          enable = false; # temporary? until that segfault is fixed
           settings.Wayland.SessionDir =
             "${pkgs.plasma5Packages.plasma-workspace}/share/wayland-sessions";
         };
+	gdm.enable = true;
       };
 
       layout = "pl";
@@ -129,6 +138,9 @@
       dconf.enable = true;
       mosh.enable = true;
       kdeconnect.enable = true;
+      sway = {
+        enable = true;
+      };
     };
 
     environment.systemPackages = with pkgs; [
@@ -159,6 +171,13 @@
       minicom
       maim
       thunderbird
+      feh
+      virt-manager
+      cura
+      ncdu
+      nixos-option
+      yt-dlp
+      lsix
     ];
 
     nixpkgs.config.joypixels.acceptLicense = true;

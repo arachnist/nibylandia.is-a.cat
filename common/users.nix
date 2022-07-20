@@ -17,7 +17,6 @@
     };
 
     users.users.root = {
-      hashedPassword = null;
       openssh.authorizedKeys.keys = config.my.secrets.userDB.ar.keys;
     };
   };

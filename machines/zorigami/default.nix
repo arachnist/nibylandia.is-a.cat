@@ -1,15 +1,14 @@
 # Still very WIP; needs roles/modules for the stuff that's actually running there
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   my = import ../..;
   userdb = config.my.secrets.userDB;
 in {
   imports = [ ./hardware.nix my.modules ];
-
-  boot.kernelPackages = pkgs.linuxPackages_testing_bcachefs;
-
+  my.boot.secureboot.enable = true;
+  
   age.secrets.cassAuth = {
     file = ../../secrets/cassAuth.age;
     group = "nginx";
@@ -30,6 +29,7 @@ in {
 
   age.secrets.arMail.file = ../../secrets/mail/ar.age;
   age.secrets.apoMail.file = ../../secrets/mail/apo.age;
+  age.secrets.madargonMail.file = ../../secrets/mail/madargon.age;
   age.secrets.mastodonMail.file = ../../secrets/mail/mastodon.age;
   age.secrets.mastodonPlainMail = {
     group = "mastodon";
@@ -102,6 +102,9 @@ in {
     };
     users.${userdb.apo.email} = {
       hashedPasswordFile = config.age.secrets.apoMail.path;
+    };
+    users.${userdb.madargon.email} = {
+      hashedPasswordFile = config.age.secrets.madargonMail.path;
     };
     users."mastodon@is-a.cat" = {
       hashedPasswordFile = config.age.secrets.mastodonMail.path;

@@ -2,14 +2,13 @@
 
 let my = import ../..;
 in {
-  imports = [ ./hardware.nix my.modules <bootspec/nixos-module.nix> ];
+  imports = [ ./hardware.nix my.modules ];
 
   my.gaming-client.enable = true;
   my.boot.secureboot.enable = true;
-  boot.loader.secureboot = {
+  security.pam.enableFscrypt = true;
+  virtualisation.libvirtd = {
+    qemu.runAsRoot = false;
     enable = true;
-    signingKeyPath = "/home/ar/secureboot-v2/DB.key";
-    signingCertPath = "/home/ar/secureboot-v2/DB.crt";
   };
-  my.boot.uefi.enable = false;
 }

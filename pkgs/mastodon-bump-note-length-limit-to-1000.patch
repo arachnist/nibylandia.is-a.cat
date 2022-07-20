@@ -1,0 +1,70 @@
+diff --git a/app/javascript/mastodon/features/compose/components/compose_form.js b/app/javascript/mastodon/features/compose/components/compose_form.js
+index 4620d1c43..604358065 100644
+--- a/app/javascript/mastodon/features/compose/components/compose_form.js
++++ b/app/javascript/mastodon/features/compose/components/compose_form.js
+@@ -90,7 +90,7 @@ class ComposeForm extends ImmutablePureComponent {
+     const fulltext = this.getFulltextForCharacterCounting();
+     const isOnlyWhitespace = fulltext.length !== 0 && fulltext.trim().length === 0;
+ 
+-    return !(isSubmitting || isUploading || isChangingUpload || length(fulltext) > 500 || (isOnlyWhitespace && !anyMedia));
++    return !(isSubmitting || isUploading || isChangingUpload || length(fulltext) > 2000 || (isOnlyWhitespace && !anyMedia));
+   }
+ 
+   handleSubmit = () => {
+@@ -273,7 +273,7 @@ class ComposeForm extends ImmutablePureComponent {
+           </div>
+ 
+           <div className='character-counter__wrapper'>
+-            <CharacterCounter max={500} text={this.getFulltextForCharacterCounting()} />
++            <CharacterCounter max={2000} text={this.getFulltextForCharacterCounting()} />
+           </div>
+         </div>
+ 
+diff --git a/app/models/account.rb b/app/models/account.rb
+index bd94142c4..23dc972e5 100644
+--- a/app/models/account.rb
++++ b/app/models/account.rb
+@@ -90,7 +90,7 @@ class Account < ApplicationRecord
+   validates :username, format: { with: /\A[a-z0-9_]+\z/i }, length: { maximum: 30 }, if: -> { local? && will_save_change_to_username? && actor_type != 'Application' }
+   validates_with UnreservedUsernameValidator, if: -> { local? && will_save_change_to_username? }
+   validates :display_name, length: { maximum: 30 }, if: -> { local? && will_save_change_to_display_name? }
+-  validates :note, note_length: { maximum: 500 }, if: -> { local? && will_save_change_to_note? }
++  validates :note, note_length: { maximum: 2000 }, if: -> { local? && will_save_change_to_note? }
+   validates :fields, length: { maximum: 4 }, if: -> { local? && will_save_change_to_fields? }
+ 
+   scope :remote, -> { where.not(domain: nil) }
+diff --git a/app/models/account_moderation_note.rb b/app/models/account_moderation_note.rb
+index 22e312bb2..e80994e0c 100644
+--- a/app/models/account_moderation_note.rb
++++ b/app/models/account_moderation_note.rb
+@@ -17,5 +17,5 @@ class AccountModerationNote < ApplicationRecord
+ 
+   scope :latest, -> { reorder('created_at DESC') }
+ 
+-  validates :content, presence: true, length: { maximum: 500 }
++  validates :content, presence: true, length: { maximum: 2000 }
+ end
+diff --git a/app/models/report_note.rb b/app/models/report_note.rb
+index 6d7167e0e..d21958fe8 100644
+--- a/app/models/report_note.rb
++++ b/app/models/report_note.rb
+@@ -17,5 +17,5 @@ class ReportNote < ApplicationRecord
+ 
+   scope :latest, -> { reorder(created_at: :desc) }
+ 
+-  validates :content, presence: true, length: { maximum: 500 }
++  validates :content, presence: true, length: { maximum: 2000 }
+ end
+diff --git a/app/validators/status_length_validator.rb b/app/validators/status_length_validator.rb
+index e107912b7..a4efdfed0 100644
+--- a/app/validators/status_length_validator.rb
++++ b/app/validators/status_length_validator.rb
+@@ -1,7 +1,7 @@
+ # frozen_string_literal: true
+ 
+ class StatusLengthValidator < ActiveModel::Validator
+-  MAX_CHARS = 500
++  MAX_CHARS = 2000
+   URL_PLACEHOLDER_CHARS = 23
+   URL_PLACEHOLDER = 'x' * 23
+ 
