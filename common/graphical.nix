@@ -60,7 +60,7 @@
     };
 
     networking.networkmanager.enable = true;
-    networking.networkmanager.wifi.backend = "iwd";
+    networking.networkmanager.wifi.backend = "wpa_supplicant";
     hardware.steam-hardware.enable = true;
     hardware.bluetooth = {
       enable = true;
@@ -100,6 +100,7 @@
         joypixels
         twemoji-color-font
         carlito
+        meslo-lgs-nf
       ];
     };
 
